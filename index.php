@@ -128,40 +128,24 @@ $tasks = [
 
                 <table class="tasks">
                     
-                        <?php foreach ($tasks as $task): ?>
-                        <?php if ( $show_complete_tasks == 1 || !$task['done'] ): ?> 
-                            <tr class="tasks__item task  <?php if ($task['done']): ?> task--completed <?php endif; ?>">
-                                <td class="task__select">
-                                    <label class="checkbox task__checkbox">
-                                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if ($task['done']): ?> checked <?php endif; ?>>
-                                        <span class="checkbox__text"><?=$task['task'];?></span>
-                                    </label>
-                                </td>
-
-                                <td class="task__file">
-                                    <a class="download-link" href="#">Home.psd</a>
-                                </td>
-
-                                <td class="task__date"><?=$task['date'];?></td>
-                            </tr>
-                        <?php endif; ?>
-                        <?php endforeach; ?>
-                    
-
-                    <?php if ($show_complete_tasks == 1): ?>
-                         <tr class="tasks__item task task--completed">
+                    <?php foreach ($tasks as $task): ?>
+                    <?php if ( $show_complete_tasks == 1 || !$task['done'] ): ?> 
+                        <tr class="tasks__item task  <?php if ($task['done']): ?> task--completed <?php endif; ?>">
                             <td class="task__select">
-                              <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden" type="checkbox" checked>
-                                <span class="checkbox__text">Записаться на интенсив "Базовый PHP"</span>
-                              </label>
+                                <label class="checkbox task__checkbox">
+                                    <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if ($task['done']): ?> checked <?php endif; ?>>
+                                    <span class="checkbox__text"><?=$task['task'];?></span>
+                                </label>
                             </td>
-                            <td class="task__date">10.10.2018</td>
 
-                            <td class="task__controls">
+                            <td class="task__file">
+                                <a class="download-link" href="#">Home.psd</a>
                             </td>
+
+                            <td class="task__date"><?=$task['date'];?></td>
                         </tr>
                     <?php endif; ?>
+                    <?php endforeach; ?>
                 </table>
             </main>
         </div>
