@@ -2,9 +2,22 @@
 require_once('functions.php');
 require_once('data.php');
 
-$page_content = include_template('index.php', $content_data);
+$page_data = [
+    'projects' => $projects,
+    'tasks' => $tasks,
+    'show_complete_tasks' => $show_complete_tasks
+];
 
-$layout_content = include_template('layout.php', $page_data);
+$page_content = include_template('index.php', $page_data);
+
+$layout_data = [
+    'projects' => $projects,
+    'site_title' => $site_title,
+    'tasks' => $tasks,
+    'page_content' => $page_content
+];
+
+$layout_content = include_template('layout.php', $layout_data);
 
 print($layout_content);
 ?>

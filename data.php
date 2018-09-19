@@ -43,17 +43,4 @@ $tasks = [
     'done' => false
     ]
 ];
-
-$content_data = [
-    'projects' => $projects,
-    'show_complete_tasks' => $show_complete_tasks
-];
-
-$page_data = [
-    'projects' => $projects,
-    'site_title' => $site_title,
-    'tasks' => $tasks
-];
-
-$page_content;
 ?>
