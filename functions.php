@@ -25,9 +25,22 @@ function include_template($name, $data) {
 return $result;
 };
 
-function esc($str) {
+/*function esc($str) {
 	$text = htmlspecialchars($str);
 	//$text = strip_tags($str);
 
 	return $text;
+};*/
+
+function esc($arr) {
+
+    foreach($arr as $key => $item){
+        if(is_array($item)){
+            $res[$key] = esc($item);
+        } else {
+            $res[$key] = htmlspecialchars($item);
+        }
+        }
+
+    return $res;
 };
