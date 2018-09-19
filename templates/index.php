@@ -35,7 +35,7 @@
                                     <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if ($task['done']): ?> checked
                                     <?php endif; ?>>
                                     <span class="checkbox__text">
-                                        <?=$task['task'];?></span>
+                                        <?=esc($task['task']);?></span>
                                 </label>
                             </td>
 

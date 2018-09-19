@@ -6,7 +6,7 @@ function count_tasks($project_title, $task_list) {
         if ( $task['category'] == $project_title ) {$sum++;}
     }
     return $sum;
-}
+};
 
 function include_template($name, $data) {
     $name = 'templates/' . $name;
@@ -23,4 +23,11 @@ function include_template($name, $data) {
     $result = ob_get_clean();
 
 return $result;
-}
+};
+
+function esc($str) {
+	$text = htmlspecialchars($str);
+	//$text = strip_tags($str);
+
+	return $text;
+};

@@ -1,7 +1,7 @@
 <?php
 $show_complete_tasks = rand(0, 1);
 
-$site_title = 'Дела в порядке'
+$site_title = 'Дела в порядке';
 
 $projects = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
 
@@ -43,4 +43,17 @@ $tasks = [
     'done' => false
     ]
 ];
+
+$content_data = [
+    'projects' => $projects,
+    'show_complete_tasks' => $show_complete_tasks
+];
+
+$page_data = [
+    'projects' => $projects,
+    'site_title' => $site_title,
+    'tasks' => $tasks
+];
+
+$page_content;
 ?>

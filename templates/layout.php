@@ -1,18 +1,9 @@
-<?php
-// показывать или нет выполненные задачи
-require_once('../functions.php');
-
-
-
-
-
-?>
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta charset="UTF-8">
-    <title><?php= $site_title; ?></title>
+    <title><?= $site_title ?></title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
@@ -56,7 +47,7 @@ require_once('../functions.php');
                                 <a class="main-navigation__list-item-link" href="#">
                                     <?= $project; ?></a>
                                 <span class="main-navigation__list-item-count">
-                                    <?= count_tasks($project, $tasks); ?></span>
+                                    <?= count_tasks($project, $tasks) ?></span>
                             </li>
                             <?php endforeach; ?>
                         </ul>
@@ -65,7 +56,7 @@ require_once('../functions.php');
                     <a class="button button--transparent button--plus content__side-button" href="pages/form-project.html" target="project_add">Добавить проект</a>
                 </section>
 
-                <?php require('index.php'); ?>
+                <?= $page_content ?>
             </div>
         </div>
     </div>
