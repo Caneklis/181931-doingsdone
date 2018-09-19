@@ -13,7 +13,6 @@ $page_content = include_template('index.php', $page_data);
 $layout_data = [
     'projects' => $projects,
     'site_title' => $site_title,
-    'tasks' => $tasks,
     'page_content' => $page_content
 ];
 
