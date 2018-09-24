@@ -25,13 +25,6 @@ function include_template($name, $data) {
 return $result;
 };
 
-/*function esc($str) {
-	$text = htmlspecialchars($str);
-	//$text = strip_tags($str);
-
-	return $text;
-};*/
-
 function esc($arr) {
 
     foreach($arr as $key => $item){
@@ -44,3 +37,17 @@ function esc($arr) {
 
     return $res;
 };
+
+function importantTaskCheck($checking_date) {
+    $marker = "";
+    if (is_numeric(strtotime($checking_date))) {
+        $checking_timestamp = strtotime($checking_date);
+        $now = time();
+        $checking_timestamp = floor(($checking_timestamp - $now)/3600);
+        if ($checking_timestamp <= 24) {
+            $marker = "task--important";
+        }
+    }
+    return $marker;
+};
+?>
