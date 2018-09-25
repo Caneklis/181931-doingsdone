@@ -39,15 +39,16 @@ function esc($arr) {
 };
 
 function importantTaskCheck($checking_date) {
-    $marker = "";
+    $marker = false;
     if (is_numeric(strtotime($checking_date))) {
         $checking_timestamp = strtotime($checking_date);
         $now = time();
         $checking_timestamp = floor(($checking_timestamp - $now)/3600);
         if ($checking_timestamp <= 24) {
-            $marker = "task--important";
+            $marker = true;
         }
     }
     return $marker;
 };
+
 ?>

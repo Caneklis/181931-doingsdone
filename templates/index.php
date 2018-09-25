@@ -48,7 +48,7 @@
 
             <?php foreach ($tasks as $task): ?>
             <?php if ( $show_complete_tasks == 1 || !$task['done'] ): ?>
-            <tr class="tasks__item task  <?php if ($task['done']): ?> task--completed <?php endif; ?>  <?=importantTaskCheck($task['date']);?>">
+            <tr class="tasks__item task  <?php if ($task['done']): ?> task--completed <?php endif; ?>   <?php if (importantTaskCheck($task['date'])): ?> task--important <?php endif; ?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if ($task['done']): ?> checked
