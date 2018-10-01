@@ -7,28 +7,6 @@ require_once ('init.php');
 $link = mysqli_connect('localhost', 'root', '', 'doingsdone');
 mysqli_set_charset($link, "utf8");
 
-$projects = [];
-$content = '';
-
-if (!$link) {
-    $error = mysqli_connect_error();
-    $content = include_template('error.php', ['error' => $error]);
-}
-else {
-    $sql = 'SELECT `id`, `title` FROM projects';
-    $result = mysqli_query($link, $sql);
-
-    if ($result) {
-        $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    }
-    
-    $sql = "SELECT * FROM tasks projects";
-    
-    if ($result) {
-        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    }
-}
-
 if (!$link) {
     $error = mysqli_connect_error();
     $page_content = include_template('error.php', ['error' => $error]);
@@ -41,7 +19,7 @@ if (!$link) {
     } else {
         $projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
     }
-    //получаем список задач
+    
     $sql = "SELECT * FROM tasks";
     if (!$res = mysqli_query($link, $sql)) {
         $error = mysqli_error($link);
