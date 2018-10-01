@@ -3,23 +3,26 @@ CREATE DATABASE doingsdone
     DEFAULT COLLATE utf8_general_ci;
 
 USE doingsdone;
- 
+
 CREATE TABLE projects (
     id       INT AUTO_INCREMENT PRIMARY KEY,
-    title     CHAR(255)
+    title     CHAR(255),
+    user_id INT NOT NULL
 );
 
-CREATE TABLE tasks (  
+CREATE TABLE tasks (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date_add DATETIME  NOT NULL,
     date_finish DATETIME NOT NULL,
     task_status TINYINT NOT NULL DEFAULT 0,
     title CHAR(255) NOT NULL,
     file CHAR(255),
-    deadline DATETIME
+    deadline DATETIME,
+    project_id INT DEFAULT NULL,
+    user_id INT NOT NULL
 );
 
-CREATE TABLE users (  
+CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date_add DATETIME  NOT NULL,
     user_email CHAR(128) NOT NULL,
@@ -32,6 +35,8 @@ CREATE TABLE users (
 CREATE UNIQUE INDEX emails ON users(user_email);
 CREATE UNIQUE INDEX names ON users(user_name);
 CREATE UNIQUE INDEX projects ON projects(title);
-CREATE UNIQUE INDEX tasks_date_add ON tasks(date_add);
-CREATE UNIQUE INDEX tasks_date_finish ON tasks(date_finish);
-CREATE UNIQUE INDEX tasks_deadline ON tasks(deadline);
+CREATE INDEX tasks_date_add ON tasks(date_add);
+CREATE INDEX tasks_date_finish ON tasks(date_finish);
+CREATE INDEX tasks_deadline ON tasks(deadline);
+CREATE INDEX project ON projects(title, user_id);
+CREATE INDEX task ON tasks(title, user_id);
