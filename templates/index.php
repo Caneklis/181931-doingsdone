@@ -7,9 +7,9 @@
                 <?php foreach ($projects as $project): ?>
                 <li class="main-navigation__list-item">
                     <a class="main-navigation__list-item-link" href="#">
-                        <?= $project; ?></a>
+                        <?= $project['title']; ?></a>
                     <span class="main-navigation__list-item-count">
-                        <?= count_tasks($project, $tasks) ?></span>
+                        <?= count_tasks($project['id'], $tasks) ?></span>
                 </li>
                 <?php endforeach; ?>
             </ul>
@@ -47,14 +47,14 @@
         <table class="tasks">
 
             <?php foreach ($tasks as $task): ?>
-            <?php if ( $show_complete_tasks == 1 || !$task['done'] ): ?>
-            <tr class="tasks__item task  <?php if ($task['done']): ?> task--completed <?php endif; ?>   <?php if (importantTaskCheck($task['date'])): ?> task--important <?php endif; ?>">
+            <?php if ( $show_complete_tasks == 1 || !$task['task_status'] ): ?>
+            <tr class="tasks__item task  <?php if ($task['task_status']): ?> task--completed <?php endif; ?>   <?php if (importantTaskCheck($task['deadline'])): ?> task--important <?php endif; ?>">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if ($task['done']): ?> checked
+                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1" <?php if ($task['task_status']): ?> checked
                         <?php endif; ?>>
                         <span class="checkbox__text">
-                            <?=$task['task'];?></span>
+                            <?=$task['title'];?></span>
                     </label>
                 </td>
 
@@ -63,7 +63,7 @@
                 </td>
 
                 <td class="task__date">
-                    <?=$task['date'];?>
+                    <?=$task['deadline'];?>
                 </td>
             </tr>
             <?php endif; ?>
