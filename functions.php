@@ -3,7 +3,7 @@
 function count_tasks($project_title, $task_list) {
     $sum = 0;
     foreach( $task_list as $task ) {    
-        if ( $task['category'] == $project_title ) {$sum++;}
+        if ( $task['project_id'] === $project_title ) {$sum++;}
     }
     return $sum;
 };
