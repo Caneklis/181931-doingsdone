@@ -19,8 +19,14 @@ if (!$link) {
     } else {
         $projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
     }
+    $where = '';
     
-    $sql = "SELECT * FROM tasks";
+    if (isset($_GET['project_id'])) {
+        $project_id = mysqli_real_escape_string($link, $_GET['project_id']);
+        $where = "WHERE project_id = " . $project_id;
+    }
+    
+    $sql = "SELECT * FROM tasks" . $where;
     if (!$res = mysqli_query($link, $sql)) {
         $error = mysqli_error($link);
         $page_content = include_template('error.php', ['error' => $error]);
@@ -28,6 +34,8 @@ if (!$link) {
         $tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
     }
 }
+
+$tasks = mysqli_fetch_all(mysqli_query ($link, $sql), MYSQLI_ASSOC);
 
 $page_data = [
     'projects' => $projects,
