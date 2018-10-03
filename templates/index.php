@@ -1,7 +1,7 @@
 <div class="content">
     <section class="content__side">
         <h2 class="content__side-heading">Проекты</h2>
-
+        
         <nav class="main-navigation">
             <ul class="main-navigation__list">
                 <?php foreach ($projects as $project): ?>
@@ -9,9 +9,10 @@
                     <a class="main-navigation__list-item-link" href="/index.php?project_id=<?= $project['id'] ?>">
                         <?= $project['title']; ?></a>
                     <span class="main-navigation__list-item-count">
-                        <?= count_tasks($project['id'], $tasks) ?></span>
+                        <?= count_tasks($project['id'], $tasks) ?>
+                        </span>
                 </li>
-                <?php endforeach; ?>
+                <?php endforeach;?>
             </ul>
         </nav>
 
@@ -45,8 +46,7 @@
         </div>
 
         <table class="tasks">
-
-            <?php foreach ($tasks as $task): ?>
+            <?php if(isset($tasks) && is_array($tasks)) foreach ($tasks as $task): ?>
             <?php if ( $show_complete_tasks == 1 || !$task['task_status'] ): ?>
             <tr class="tasks__item task  <?php if ($task['task_status']): ?> task--completed <?php endif; ?>   <?php if (importantTaskCheck($task['deadline'])): ?> task--important <?php endif; ?>">
                 <td class="task__select">

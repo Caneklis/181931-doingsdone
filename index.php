@@ -1,4 +1,5 @@
 <?php
+ini_set('display_errors',1);
 error_reporting(E_ALL);
 require_once('functions.php');
 require_once('data.php');
@@ -23,7 +24,7 @@ if (!$link) {
     
     if (isset($_GET['project_id'])) {
         $project_id = mysqli_real_escape_string($link, $_GET['project_id']);
-        $where = "WHERE project_id = " . $project_id;
+        $where = " WHERE project_id = " . $project_id;
     }
     
     $sql = "SELECT * FROM tasks" . $where;
