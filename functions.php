@@ -1,12 +1,12 @@
 <?php
 
-function count_tasks($project_title, $task_list) {
+/*function count_tasks($project_title, $task_list) {
     $sum = 0;
-    if(isset($task_list) && is_array($task_list)) foreach( $task_list as $task ) {    
+    if(isset($task_list) && is_array($task_list)) foreach( $task_list as $task ) {
         if ( $task['project_id'] === $project_title ) {$sum++;}
     }
     return $sum;
-};
+};*/
 
 function include_template($name, $data) {
     $name = 'templates/' . $name;
