@@ -9,25 +9,27 @@ require_once ('init.php');
 $link = mysqli_connect('localhost', 'root', '', 'doingsdone');
 mysqli_set_charset($link, "utf8");
 
+$errors = [];
+$dict = ['title' => 'Название', 'deadline' => 'Срок выполнения', 'project_id' => 'Выбирите проект'];
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
     $tasks = $_POST;
     
     $required = ['title', 'description'];
-	$dict = ['title' => 'Название', 'deadline' => 'Срок выполнения', 'project_id' => 'Выбирите проект'];
     
-	$errors = [];
+	
 	foreach ($required as $key) {
 		if (empty($_POST[$key])) {
             $errors[$key] = 'Это поле надо заполнить';
 		}
 	}
     
-    if (!count($errors)) {
-        header("Location: index.php");
-        
+    if (!empty($errors)) {
+        print('Ошибка');
 		
 	} else {
-        
+        header("Location: index.php");
+        print('Все прошло хорошо, форма отправлена');
     }
 }
 
