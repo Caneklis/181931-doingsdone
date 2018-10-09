@@ -15,7 +15,7 @@ $dict = ['title' => 'Название', 'deadline' => 'Срок выполнен
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
     $tasks = $_POST;
     
-    $required = ['title', 'description'];
+    $required = ['title', 'deadline', 'project_id'];
     
 	
 	foreach ($required as $key) {
@@ -28,6 +28,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         print('Ошибка');
 		
 	} else {
+        $_POST['title'];
+        $_POST['deadline'];
+        $_POST['project_id'];
+        
+        $result = mysqli_query("INSERT INTO tasks (title, deadline, project_id) VALUES ('$title', '$deadline', '$project_id')");
+        //Если запрос пройдет успешно то в переменную result вернется true
+        if($result == 'true') 
+        {echo "Ваши данные успешно добавлены";}
+        else{echo "Ваши данные не добавлены";}
         header("Location: index.php");
         print('Все прошло хорошо, форма отправлена');
     }

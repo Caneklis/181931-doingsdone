@@ -29,7 +29,7 @@
                
                 <label class="form__label" for="name">Название <sup>*</sup></label>
 
-                <input class="form__input <?=$classname;?>" type="text" name="name" id="name" value="<?=$value;?>" placeholder="Введите название">
+                <input class="form__input <?=$classname;?>" type="text" name="title" id="name" value="<?=$value;?>" placeholder="Введите название">
             </div>
 
             <div class="form__row">
@@ -37,9 +37,9 @@
                <?php $classname = isset($errors['project_id']) ? "form__input--error" : "";
                      $value = isset($tasks['project_id']) ? $tasks['project_id'] : ""; ?>
                 
-                <select class="form__input form__input--select" name="project" id="project">
+                <select class="form__input form__input--select" name="project_id" id="project">
                 <?php foreach ($projects as $project): ?>
-                    <option value="<?= $project['title']; ?>"><?= $project['title']; ?></option>
+                    <option value="<?= $project['id']; ?>"><?= $project['title']; ?></option>
                 <?php endforeach;?>
                 </select>
 
@@ -50,7 +50,7 @@
                 <?php $classname = isset($errors['deadline']) ? "form__input--error" : "";
                       $value = isset($tasks['deadline']) ? $tasks['deadline'] : ""; ?>
 
-                <input class="form__input form__input--date  <?=$classname;?>" type="date" name="date" id="date" value="<?=$value;?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+                <input class="form__input form__input--date  <?=$classname;?>" type="date" name="deadline" id="date" value="<?=$value;?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
             </div>
 
             <div class="form__row">
