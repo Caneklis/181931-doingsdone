@@ -11,6 +11,33 @@ mysqli_set_charset($link, "utf8");
 
 $errors = [];
 $dict = ['title' => 'Название', 'deadline' => 'Срок выполнения', 'project_id' => 'Выбирите проект'];
+$title = '';
+$file = '';
+$deadline = '';
+$project_id = '';
+$user_id = '';
+
+/*if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $tasks = $_POST;
+
+    $filename = uniqid() . '.gif';
+    $tasks['path'] = $filename;
+    move_uploaded_file($_FILES['preview']['tmp_name'], 'uploads/' . $filename);
+
+    $sql = 'INSERT INTO gifs (date_add, task_status, title, file, deadline, user_id, project_id) VALUES (NOW(), 0, ?, ?, ?, ?, ?)';
+
+    $stmt = db_get_prepare_stmt($link, $sql, [$tasks['title'], $tasks['deadline'], $tasks['project_id'], $tasks['path']]);
+    $res = mysqli_stmt_execute($stmt);
+
+    if ($res) {
+        $gif_id = mysqli_insert_id($link);
+
+        header("Location: gif.php?id=" . $gif_id);
+    }
+    else {
+        $content = include_template('error.php', ['error' => mysqli_error($link)]);
+    }
+}*/
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
     $tasks = $_POST;
@@ -28,17 +55,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         print('Ошибка');
 		
 	} else {
-        $_POST['title'];
-        $_POST['deadline'];
-        $_POST['project_id'];
+        $sql_insert = "INSERT INTO tasks SET
+            `date_add` = NOW(),
+            `title` = '{$title}',
+            `file` = '{$file}',
+            `deadline` =  '{$deadline}',
+            `user_id` = '{$user_id}',
+            `project_id` = '{$project_id}'
+        ";
         
-        $result = mysqli_query("INSERT INTO tasks (title, deadline, project_id) VALUES ('$title', '$deadline', '$project_id')");
-        //Если запрос пройдет успешно то в переменную result вернется true
-        if($result == 'true') 
-        {echo "Ваши данные успешно добавлены";}
-        else{echo "Ваши данные не добавлены";}
-        header("Location: index.php");
-        print('Все прошло хорошо, форма отправлена');
+        print($sql_insert);
+       
+        if (!$res = mysqli_query($link, $sql_insert)) {
+            $error = mysqli_error($link);
+            $page_content = include_template('add.php', ['error' => $error]);
+            $tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
+            echo "Ваши данные не добавлены";
+        } else {
+            header('Location: /index.php');
+            print('Все прошло хорошо, форма отправлена');
+        }
     }
 }
 

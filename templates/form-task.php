@@ -26,17 +26,20 @@
             <div class="form__row">
                <?php $classname = isset($errors['title']) ? "form__input--error" : "";
                      $value = isset($tasks['title']) ? $tasks['title'] : ""; ?>
-               
+                     
                 <label class="form__label" for="name">Название <sup>*</sup></label>
 
                 <input class="form__input <?=$classname;?>" type="text" name="title" id="name" value="<?=$value;?>" placeholder="Введите название">
+               
+                <?php if (isset($errors['title'])): ?>
+                    <span class="form__error"><?=$errors['title'];?></span>
+                <?php endif;?>
             </div>
 
             <div class="form__row">
                 <label class="form__label" for="project">Проект <sup>*</sup></label>
-               <?php $classname = isset($errors['project_id']) ? "form__input--error" : "";
+                <?php $classname = isset($errors['project_id']) ? "form__input--error" : "";
                      $value = isset($tasks['project_id']) ? $tasks['project_id'] : ""; ?>
-                
                 <select class="form__input form__input--select" name="project_id" id="project">
                 <?php foreach ($projects as $project): ?>
                     <option value="<?= $project['id']; ?>"><?= $project['title']; ?></option>
@@ -51,6 +54,10 @@
                       $value = isset($tasks['deadline']) ? $tasks['deadline'] : ""; ?>
 
                 <input class="form__input form__input--date  <?=$classname;?>" type="date" name="deadline" id="date" value="<?=$value;?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
+               
+                <?php if (isset($errors['title'])): ?>
+                    <span class="form__error"><?=$errors['title'];?></span>
+                <?php endif;?>
             </div>
 
             <div class="form__row">
