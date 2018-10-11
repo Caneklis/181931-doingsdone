@@ -11,11 +11,13 @@ mysqli_set_charset($link, "utf8");
 
 $errors = [];
 $dict = ['title' => 'Название', 'deadline' => 'Срок выполнения', 'project_id' => 'Выбирите проект'];
-$title = '';
-$file = '';
-$deadline = '';
-$project_id = '';
-$user_id = '';
+$title = htmlspecialchars($_POST['title'] ?? '');
+//$file = $_POST['preview'];
+//$file = $_FILES['preview']['name'];
+$deadline = date('Y-m-d', strtotime( htmlspecialchars($_POST['deadline'] ?? '')));
+$project_id = htmlspecialchars($_POST['project_id'] ?? '');
+$user_id = '1';
+//$user_id = $_POST['user_id'];
 
 /*if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tasks = $_POST;
@@ -43,8 +45,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tasks = $_POST;
     
     $required = ['title', 'deadline', 'project_id'];
+
+	$original_name = $_FILES["image"]["name"];
+
+    $extension = pathinfo($original_name, PATHINFO_EXTENSION);
+
+    $new_name = uniqid().'.'.$extension;
+
+    move_uploaded_file($_FILES["preview"]["tmp_name"],"uploads/" . $new_name);
     
-	
 	foreach ($required as $key) {
 		if (empty($_POST[$key])) {
             $errors[$key] = 'Это поле надо заполнить';
@@ -52,28 +61,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
     
     if (!empty($errors)) {
-        print('Ошибка');
+        $error = mysqli_error($link);
+        $page_content = include_template('add.php', ['error' => $error]);
 		
 	} else {
+        
         $sql_insert = "INSERT INTO tasks SET
             `date_add` = NOW(),
-            `title` = '{$title}',
-            `file` = '{$file}',
-            `deadline` =  '{$deadline}',
-            `user_id` = '{$user_id}',
-            `project_id` = '{$project_id}'
+            `title` = '$title',
+            `file` = '$file',
+            `deadline` =  '$deadline',
+            `user_id` = '$user_id',
+            `project_id` = '$project_id'
         ";
-        
-        print($sql_insert);
        
         if (!$res = mysqli_query($link, $sql_insert)) {
             $error = mysqli_error($link);
             $page_content = include_template('add.php', ['error' => $error]);
             $tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
-            echo "Ваши данные не добавлены";
         } else {
             header('Location: /index.php');
-            print('Все прошло хорошо, форма отправлена');
         }
     }
 }

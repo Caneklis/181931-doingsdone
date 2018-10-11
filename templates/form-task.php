@@ -32,7 +32,7 @@
                 <input class="form__input <?=$classname;?>" type="text" name="title" id="name" value="<?=$value;?>" placeholder="Введите название">
                
                 <?php if (isset($errors['title'])): ?>
-                    <span class="form__error"><?=$errors['title'];?></span>
+                    <span class="form__message error-message"><?=$errors['title'];?></span>
                 <?php endif;?>
             </div>
 
@@ -56,7 +56,7 @@
                 <input class="form__input form__input--date  <?=$classname;?>" type="date" name="deadline" id="date" value="<?=$value;?>" placeholder="Введите дату в формате ДД.ММ.ГГГГ">
                
                 <?php if (isset($errors['title'])): ?>
-                    <span class="form__error"><?=$errors['title'];?></span>
+                    <span class="form__message error-message"><?=$errors['title'];?></span>
                 <?php endif;?>
             </div>
 
