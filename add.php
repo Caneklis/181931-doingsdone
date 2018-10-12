@@ -12,69 +12,51 @@ mysqli_set_charset($link, "utf8");
 $errors = [];
 $dict = ['title' => 'Название', 'deadline' => 'Срок выполнения', 'project_id' => 'Выбирите проект'];
 $title = htmlspecialchars($_POST['title'] ?? '');
-//$file = $_POST['preview'];
-//$file = $_FILES['preview']['name'];
 $deadline = date('Y-m-d', strtotime( htmlspecialchars($_POST['deadline'] ?? '')));
 $project_id = htmlspecialchars($_POST['project_id'] ?? '');
 $user_id = '1';
 //$user_id = $_POST['user_id'];
 
-/*if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $tasks = $_POST;
 
-    $filename = uniqid() . '.gif';
-    $tasks['path'] = $filename;
-    move_uploaded_file($_FILES['preview']['tmp_name'], 'uploads/' . $filename);
-
-    $sql = 'INSERT INTO gifs (date_add, task_status, title, file, deadline, user_id, project_id) VALUES (NOW(), 0, ?, ?, ?, ?, ?)';
-
-    $stmt = db_get_prepare_stmt($link, $sql, [$tasks['title'], $tasks['deadline'], $tasks['project_id'], $tasks['path']]);
-    $res = mysqli_stmt_execute($stmt);
-
-    if ($res) {
-        $gif_id = mysqli_insert_id($link);
-
-        header("Location: gif.php?id=" . $gif_id);
-    }
-    else {
-        $content = include_template('error.php', ['error' => mysqli_error($link)]);
-    }
-}*/
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
-    $tasks = $_POST;
-    
     $required = ['title', 'deadline', 'project_id'];
 
-	$original_name = $_FILES["image"]["name"];
+    if (isset($_FILES['preview']['name'])) {
+        $tmp_name = $_FILES['preview']['tmp_name'];
+        $path = $_FILES['preview']['name'];
+        $extension = pathinfo($_FILES['preview']['name'], PATHINFO_EXTENSION);
+        $new_name = uniqid().'.'.$extension;
+        move_uploaded_file($tmp_name, 'uploads/' . $new_name);
+        $task['file'] = $new_name;
+	}
+	else {
+		$task['file'] = false;
+	}
 
-    $extension = pathinfo($original_name, PATHINFO_EXTENSION);
-
-    $new_name = uniqid().'.'.$extension;
-
-    move_uploaded_file($_FILES["preview"]["tmp_name"],"uploads/" . $new_name);
-    
 	foreach ($required as $key) {
 		if (empty($_POST[$key])) {
             $errors[$key] = 'Это поле надо заполнить';
 		}
 	}
-    
+
     if (!empty($errors)) {
         $error = mysqli_error($link);
         $page_content = include_template('add.php', ['error' => $error]);
-		
+
 	} else {
-        
+
         $sql_insert = "INSERT INTO tasks SET
             `date_add` = NOW(),
             `title` = '$title',
-            `file` = '$file',
+            `file` = '{$task['file']}',
             `deadline` =  '$deadline',
             `user_id` = '$user_id',
             `project_id` = '$project_id'
         ";
-       
+
         if (!$res = mysqli_query($link, $sql_insert)) {
             $error = mysqli_error($link);
             $page_content = include_template('add.php', ['error' => $error]);
@@ -127,4 +109,3 @@ $layout_data = [
 $layout_content = include_template('layout.php', $layout_data);
 
 print($layout_content);
-

@@ -59,7 +59,7 @@
                 </td>
 
                 <td class="task__file">
-                    <a class="download-link" href="/uploads/<?=$task['file'];?>"><?=$task['file'];?></a>
+                    <?php if ($task['file']): ?> <a class="download-link" href="/uploads/<?=$task['file'];?>"></a> <?php endif; ?>
                 </td>
 
                 <td class="task__date">
