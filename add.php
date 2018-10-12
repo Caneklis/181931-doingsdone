@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $required = ['title', 'deadline', 'project_id'];
 
-    if (isset($_FILES['preview']['name'])) {
+    if (!empty($_FILES['preview']['name'])) {
         $tmp_name = $_FILES['preview']['tmp_name'];
         $path = $_FILES['preview']['name'];
         $extension = pathinfo($_FILES['preview']['name'], PATHINFO_EXTENSION);
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $task['file'] = $new_name;
 	}
 	else {
-		$task['file'] = false;
+		$task['file'] = '';
 	}
 
 	foreach ($required as $key) {
