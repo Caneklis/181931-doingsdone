@@ -52,4 +52,55 @@ function importantTaskCheck($checking_date) {
     return $marker;
 };
 
+/**
+ * Создает подготовленное выражение на основе готового SQL запроса и переданных данных
+ *
+ * @param $link mysqli Ресурс соединения
+ * @param $sql string SQL запрос с плейсхолдерами вместо значений
+ * @param array $data Данные для вставки на место плейсхолдеров
+ *
+ * @return mysqli_stmt Подготовленное выражение
+ */
+function db_get_prepare_stmt($link, $sql, $data = []) {
+    $stmt = mysqli_prepare($link, $sql);
+
+    if ($data) {
+        $types = '';
+        $stmt_data = [];
+
+        foreach ($data as $value) {
+            $type = null;
+
+            if (is_int($value)) {
+                $type = 'i';
+            }
+            else if (is_string($value)) {
+                $type = 's';
+            }
+            else if (is_double($value)) {
+                $type = 'd';
+            }
+
+            if ($type) {
+                $types .= $type;
+                $stmt_data[] = $value;
+            }
+        }
+
+        $values = array_merge([$stmt, $types], $stmt_data);
+
+        $func = 'mysqli_stmt_bind_param';
+        $func(...$values);
+    }
+
+    return $stmt;
+}
+
+function show_error(&$content, $error) {
+    $content = include_template('error.php', ['error' => $error]);
+}
+
+function chpu ($path){return strtr($path,array("«"=>"", "»"=>"", " "=>"_", "-"=>"_", "№"=>"", "є"=>"e", "і"=>"i", "І"=>"i", "$"=>"", ";"=>"", ":"=>"", ","=>"", "["=>"", "'"=>"", "]"=>"", "*"=>"_", "/"=>"_", "|"=>"_", "{"=>"", "}"=>"", "="=>"_", "+"=>"", "?"=>"", "!"=>"", "@"=>"", "#"=>"", "%"=>"", "^"=>"", "&"=>"", "("=>"", ")"=>"", "\""=>"", "а"=>"a", "б"=>"b", "в"=>"v", "г"=>"g", "д"=>"d", "е"=>"e", "ё"=>"jo", "ж"=>"zh", "з"=>"z", "и"=>"i", "й"=>"j", "к"=>"k", "л"=>"l", "м"=>"m", "н"=>"n", "о"=>"o", "п"=>"p", "р"=>"r", "с"=>"s", "т"=>"t", "у"=>"u", "ф"=>"f", "х"=>"x", "ц"=>"c", "ч"=>"ch", "ш"=>"sh", "щ"=>"shh", "ъ"=>"", "ы"=>"y", "ь"=>"", "э"=>"je", "ю"=>"ju", "я"=>"ya", "йо"=>"j/o", "йе"=>"j/e", "А"=>"a", "Б"=>"b", "В"=>"v", "Є"=>"e", "Г"=>"g", "Д"=>"d", "Е"=>"e", "Ё"=>"jo", "Ж"=>"zh", "З"=>"z", "И"=>"i", "Й"=>"j", "К"=>"k", "Л"=>"l", "М"=>"m", "Н"=>"n", "О"=>"o", "П"=>"p", "Р"=>"r", "С"=>"s", "Т"=>"t", "У"=>"u", "Ф"=>"f", "Х"=>"x", "Ц"=>"c", "Ч"=>"ch", "Ш"=>"sh", "Щ"=>"shh", "Ъ"=>"", "Ы"=>"y", "Ь"=>"", "Э"=>"je", "Ю"=>"ju", "Я"=>"ya", "ЙО"=>"", "ЙЕ"=>"")); }
+
+
 ?>
