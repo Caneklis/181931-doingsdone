@@ -9,6 +9,7 @@ require_once ('init.php');
 $link = mysqli_connect('localhost', 'root', '', 'doingsdone');
 mysqli_set_charset($link, "utf8");
 
+$site_title = "Дела в порядке: добавить задачу";
 $errors = [];
 $dict = ['title' => 'Название', 'deadline' => 'Срок выполнения', 'project_id' => 'Выбирите проект'];
 $title = mysqli_real_escape_string($link, $_POST['title'] ?? '');
