@@ -11,9 +11,9 @@ mysqli_set_charset($link, "utf8");
 
 $errors = [];
 $dict = ['title' => 'Название', 'deadline' => 'Срок выполнения', 'project_id' => 'Выбирите проект'];
-$title = htmlspecialchars($_POST['title'] ?? '');
-$deadline = date('Y-m-d', strtotime( htmlspecialchars($_POST['deadline'] ?? '')));
-$project_id = htmlspecialchars($_POST['project_id'] ?? '');
+$title = mysqli_real_escape_string($link, $_POST['title'] ?? '');
+$deadline = date('Y-m-d', strtotime( mysqli_real_escape_string($link, $_POST['deadline'] ?? '')));
+$project_id = mysqli_real_escape_string($link, $_POST['project_id'] ?? '');
 $user_id = '1';
 //$user_id = $_POST['user_id'];
 
