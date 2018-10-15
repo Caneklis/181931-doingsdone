@@ -7,6 +7,8 @@ require_once ('data.php');
 
 require_once ('init.php');
 
+session_start();
+
 $link = mysqli_connect('localhost', 'root', '', 'doingsdone');
 mysqli_set_charset($link, "utf8");
 $site_title = "Дела в порядке: регистрация/вход";
