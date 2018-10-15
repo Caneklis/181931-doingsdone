@@ -33,7 +33,6 @@ CREATE TABLE users (
 );
 
 CREATE UNIQUE INDEX emails ON users(user_email);
-CREATE UNIQUE INDEX names ON users(user_name);
 CREATE UNIQUE INDEX projects ON projects(title);
 CREATE INDEX tasks_date_add ON tasks(date_add);
 CREATE INDEX tasks_date_finish ON tasks(date_finish);

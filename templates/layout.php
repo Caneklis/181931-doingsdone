@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $site_title ?></title>
+    <title>
+        <?= $site_title ?>
+    </title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
@@ -20,19 +22,22 @@
                 </a>
 
                 <div class="main-header__side">
+                    <?php if (isset($_SESSION['user'])): ?>
                     <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
-
                     <div class="main-header__side-item user-menu">
                         <div class="user-menu__image">
                             <img src="img/user-pic.jpg" width="40" height="40" alt="Пользователь">
                         </div>
-
                         <div class="user-menu__data">
-                            <p>Константин</p>
-
-                            <a href="#">Выйти</a>
+                            <p>
+                                <?=htmlspecialchars($_SESSION['user']['user_name']);?>
+                            </p>
+                            <a href="logout.php">Выйти</a>
                         </div>
                     </div>
+                    <?php else: ?>
+                    <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
+                    <?php endif; ?>
                 </div>
             </header>
 
