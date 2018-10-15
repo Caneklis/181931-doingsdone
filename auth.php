@@ -59,7 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		}
 	}
 }
-
 else {
 	if (isset($_SESSION['user'])) {
 		$page_content = include_template('index.php', ['user_name' => $_SESSION['user']['user_name'], 'user_id' => $_SESSION['user']['id'], 'site_title' => $site_title]);

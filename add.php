@@ -8,7 +8,6 @@ require_once ('data.php');
 require_once ('init.php');
 
 session_start();
-
 $link = mysqli_connect('localhost', 'root', '', 'doingsdone');
 mysqli_set_charset($link, "utf8");
 $site_title = "Дела в порядке: добавить задачу";
@@ -21,15 +20,15 @@ $tasks = [];
 $user_id = $_SESSION['user']['id'];
 
 if (!isset($_SESSION['user'])) {
-    header('HTTP/1.0 403 Forbidden');
-    exit();
+	header('HTTP/1.0 403 Forbidden');
+	exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$tasks = $_POST;
-    $title = mysqli_real_escape_string($link, $_POST['title']);
-    $deadline = date('Y-m-d', strtotime(mysqli_real_escape_string($link, $_POST['deadline'])));
-    $project_id = mysqli_real_escape_string($link, $_POST['project_id']);
+	$title = mysqli_real_escape_string($link, $_POST['title']);
+	$deadline = date('Y-m-d', strtotime(mysqli_real_escape_string($link, $_POST['deadline'])));
+	$project_id = mysqli_real_escape_string($link, $_POST['project_id']);
 	$required = ['title', 'deadline', 'project_id'];
 	if (!empty($_FILES['preview']['name'])) {
 		$tmp_name = $_FILES['preview']['tmp_name'];
@@ -87,13 +86,13 @@ else {
 		$projects = mysqli_fetch_all($res, MYSQLI_ASSOC);
 	}
 
-	$where = ''; 
-    if (isset($_GET['project_id'])) { 
-    $project_id = mysqli_real_escape_string($link, $_GET['project_id']); 
-    $where = "AND `project_id` = " . $project_id; 
-    } 
+	$where = '';
+	if (isset($_GET['project_id'])) {
+		$project_id = mysqli_real_escape_string($link, $_GET['project_id']);
+		$where = "AND `project_id` = " . $project_id;
+	}
 
-    $sql = "SELECT * FROM tasks WHERE `user_id` = '{$_SESSION['user']['id']}' {$where} ORDER BY date_add DESC";
+	$sql = "SELECT * FROM tasks WHERE `user_id` = '{$_SESSION['user']['id']}' {$where} ORDER BY date_add DESC";
 	if (!$res = mysqli_query($link, $sql)) {
 		$error = mysqli_error($link);
 		$page_content = include_template('error.php', ['error' => $error]);
@@ -103,7 +102,6 @@ else {
 	}
 }
 
-//$tasks = mysqli_fetch_all(mysqli_query($link, $sql) , MYSQLI_ASSOC);
 $page_content = include_template("form-task.php", ['tasks' => $tasks, 'errors' => $errors, 'dict' => $dict, "projects" => $projects]);
 $layout_data = ['projects' => $projects, 'site_title' => $site_title, 'page_content' => $page_content, 'content' => $content];
 $layout_content = include_template('layout.php', $layout_data);

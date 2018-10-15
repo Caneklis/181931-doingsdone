@@ -8,17 +8,18 @@ require_once ('data.php');
 require_once ('init.php');
 
 session_start();
-
 $link = mysqli_connect('localhost', 'root', '', 'doingsdone');
 mysqli_set_charset($link, "utf8");
 $site_title = "Дела в порядке: Добавить проект";
 $errors = [];
 $dict = ['name' => 'Название проекта'];
 $user_id = $_SESSION['user']['id'];
+
 if (!isset($_SESSION['user'])) {
-    header('HTTP/1.0 403 Forbidden');
-    exit();
+	header('HTTP/1.0 403 Forbidden');
+	exit();
 }
+
 $projects = $_POST;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -26,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$now = date("Y-m-d H:i:s");
 	$project_title = mysqli_real_escape_string($link, $_POST["name"]);
 	$titleClear = $project_title;
-	$sql = mysqli_query($link, "SELECT `title` FROM `projects` WHERE `project_title` = '$titleClear'");
+	$sql = mysqli_query($link, "SELECT `title` FROM `projects` WHERE `title` = '$titleClear'");
 	if (mysqli_num_rows($sql) > 0) {
 		$errors['name'] = "Такой проект уже существует";
 	}
@@ -42,13 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	}
 	else {
 		$sql_insert = "INSERT INTO projects SET
-                `date_add` = '$now',
-                `project_title` = '$project_title',
+                `title` = '$project_title',
                 `user_id` = '$user_id'";
 		if (!$res = mysqli_query($link, $sql_insert)) {
 			$error = mysqli_error($link);
 			$page_content = include_template('add-project.php', ['errors' => $errors]);
-
 		}
 		else {
 			header('Location: /index.php');
