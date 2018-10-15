@@ -7,14 +7,12 @@ require_once ('data.php');
 
 require_once ('init.php');
 
+session_start();
 $link = mysqli_connect('localhost', 'root', '', 'doingsdone');
 mysqli_set_charset($link, "utf8");
 $site_title = "Дела в порядке: регистрация/вход";
 $errors = [];
 $dict = ['email' => 'email', 'name' => 'Имя', 'password' => 'пароль'];
-
-// $user_id = $_POST['user_id'];
-
 $users = $_POST;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -47,7 +45,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (!$res = mysqli_query($link, $sql_insert)) {
 			$error = mysqli_error($link);
 			$page_content = include_template('register.php', ['errors' => $errors]);
-
 		}
 		else {
 			header('Location: /index.php');

@@ -3,36 +3,41 @@
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $site_title ?></title>
+    <title>
+        <?= $site_title ?>
+    </title>
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
 </head>
 
-<body>
+<body<?php if (isset($hide_aside)) {print ' class="body-background"' ;} ?>>
     <h1 class="visually-hidden">Дела в порядке</h1>
 
     <div class="page-wrapper">
-        <div class="container container--with-sidebar">
+        <div class="container <?php if (!isset($hide_aside)) {print 'container--with-sidebar';} ?>">
             <header class="main-header">
                 <a href="/">
                     <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
                 </a>
 
                 <div class="main-header__side">
+                    <?php if (isset($_SESSION['user'])): ?>
                     <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
-
                     <div class="main-header__side-item user-menu">
                         <div class="user-menu__image">
                             <img src="img/user-pic.jpg" width="40" height="40" alt="Пользователь">
                         </div>
-
                         <div class="user-menu__data">
-                            <p>Константин</p>
-
-                            <a href="#">Выйти</a>
+                            <p>
+                                <?=htmlspecialchars($_SESSION['user']['user_name']);?>
+                            </p>
+                            <a href="logout.php">Выйти</a>
                         </div>
                     </div>
+                    <?php else: ?>
+                    <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
+                    <?php endif; ?>
                 </div>
             </header>
 
@@ -48,7 +53,7 @@
                 <p>Веб-приложение для удобного ведения списка дел.</p>
             </div>
 
-            <a class="main-footer__button button button--plus" href="add.php">Добавить задачу</a>
+            <?php if (isset($_SESSION['user'])) print('<a class="main-footer__button button button--plus" href="add.php">Добавить задачу</a>'); ?>
 
             <div class="main-footer__social social">
                 <span class="visually-hidden">Мы в соцсетях:</span>
@@ -97,6 +102,6 @@
 
     <script src="flatpickr.js"></script>
     <script src="script.js"></script>
-</body>
+    </body>
 
 </html>
