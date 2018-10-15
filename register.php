@@ -25,11 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$user_name = mysqli_real_escape_string($link, $_POST["name"]);
 	$emailClear = $user_email;
 	$sql = mysqli_query($link, "SELECT `id` FROM `users` WHERE `user_email` = '$emailClear'");
-	/*    if (!$sql) {
-	die('Error: ' . mysqli_error($link));
-	}*/
 	if (mysqli_num_rows($sql) > 0) {
-        $page_content = include_template('register.php', ['errors' => $errors]); 
 		$errors['email'] = "Этот адрес уже зарегестрирован";
 	}
 
@@ -41,12 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 	if (!empty($errors)) {
 		$error = mysqli_error($link);
-		$page_content = include_template('register.php', ['errors' => $errors]);
 	}
 	else {
-		/*        if(mysqli_num_rows($sql) > 0) {
-		echo "Пользователь с таким email уже зарегестрирован";
-		}*/
 		$sql_insert = "INSERT INTO users SET
                 `date_add` = '$now',
                 `user_email` = '$user_email',
@@ -55,8 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (!$res = mysqli_query($link, $sql_insert)) {
 			$error = mysqli_error($link);
 			$page_content = include_template('register.php', ['errors' => $errors]);
-
-			// $users = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
 		}
 		else {
